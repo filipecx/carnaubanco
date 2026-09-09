@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/db_wallet_service
     username: postgres
-    password: postgrespassword
+    password: postgresspassword
     driver-class-name: org.postgresql.Driver
 
   jpa:

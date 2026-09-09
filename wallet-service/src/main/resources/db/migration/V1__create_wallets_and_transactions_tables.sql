@@ -8,15 +8,15 @@ CREATE TABLE wallets (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
     CONSTRAINT chk_wallet_balance_positive CHECK (balance >= 0.00)
-)
+);
 
-CREATE INDEX idx_wallet_user_id ON wallets(user_id)
+CREATE INDEX idx_wallet_user_id ON wallets(user_id);
 
 CREATE TABLE transactions (
     id UUID PRIMARY KEY,
     idempotency_key VARCHAR(100) NOT NULL UNIQUE,
-    source_wallet_id UUID NOT NULL REFERENCES wallets(id)
-    target_wallet_id UUID NOT NULL REFERENCES wallets(id)
+    source_wallet_id UUID NOT NULL REFERENCES wallets(id),
+    target_wallet_id UUID NOT NULL REFERENCES wallets(id),
     amount DECIMAL(15, 2) NOT NULL,
     type VARCHAR(30) NOT NULL,
     status VARCHAR(20) NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE transactions (
 
     CONSTRAINT chk_transaction_amount_positive CHECK (amount > 0.00),
     CONSTRAINT chk_transaction_different_wallets CHECK (source_wallet_id <> target_wallet_id)
-)
+);
 
 -- indices para consulta de extrato 
 

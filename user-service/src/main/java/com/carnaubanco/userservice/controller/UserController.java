@@ -2,7 +2,6 @@ package com.carnaubanco.userservice.controller;
 
 import java.net.URI;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
