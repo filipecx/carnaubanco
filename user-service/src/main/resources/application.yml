@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_user_service
+    username: postgres
+    password: postgresspassword
+    driver-class-name: org.postgresql.Driver
+
+    jpa:
+      hibernate:
+        #nunca use update ou create-drop em projetos sérios de fintech
+        #validate garante que o hibernate apenas valide se as entidades java batem com o banco. quem altera o banco é o flyway
+        ddl-auto: validate
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
+
+    flyway:
+      enabled: true
+      baseline-on-migrate: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
