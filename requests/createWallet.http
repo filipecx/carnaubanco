@@ -1,0 +1,7 @@
+POST http://localhost:8082/api/v1/wallets HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "9ee2cc13-ae8b-458a-932a-0afae67bc12c",
+    "currency": "PALHAS"
+}

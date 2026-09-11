@@ -1,0 +1,9 @@
+POST http://localhost:8081/api/v1/users HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Maria",
+    "email": "maria@email.com",
+    "cpf": "12345678900",
+    "password": "SenhaT0p"
+}

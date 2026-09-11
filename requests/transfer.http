@@ -1,0 +1,9 @@
+POST http://localhost:8082/api/v1/wallets/transfer HTTP/1.1
+content-type: application/json
+idempotency-key: chave-teste0428
+
+{
+    "sourceWalletId": "b4d544cc-c970-4d10-b8a8-59e1ecbae9a5",
+    "targetWalletId": "f6533f69-62fe-49e4-be7a-c913f9946649",
+    "amount": 5.00
+}

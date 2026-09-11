@@ -23,8 +23,30 @@ spring:
     enabled: true
     baseline-on-migrate: true
 
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
+
 management:
   endpoints:
     web:
       exposure:
         include: health,info
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      userServiceCB:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 5
+        minimum-number-of-calls: 3
+        failure-rate-treshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 2
+
+clients:
+  user-service:
+    url: http://localhost:8081
+
