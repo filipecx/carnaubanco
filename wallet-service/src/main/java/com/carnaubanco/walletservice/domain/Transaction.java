@@ -27,6 +27,10 @@ public class Transaction {
     private String idempotencyKey;
 
     @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn (name = "source_wallet_id", nullable = false)
+    private Wallet sourceWallet;
+    
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn (name = "target_wallet_id", nullable = false)
     private Wallet targetWallet;
 
@@ -46,14 +50,22 @@ public class Transaction {
 
     protected Transaction() {}
 
-    public Transaction(String idempotencyKey, Wallet targetWallet, BigDecimal amount, TransactionType type,
-            TransactionStatus status) {
-        this.idempotencyKey = idempotencyKey;
-        this.targetWallet = targetWallet;
-        this.amount = amount;
-        this.type = type;
-        this.status = status;
-        this.createdAt = OffsetDateTime.now(ZoneOffset.UTC);
+    public Transaction(
+        String idempotencyKey, 
+        Wallet sourceWallet,
+        Wallet targetWallet, 
+        BigDecimal amount, 
+        TransactionType type,
+        TransactionStatus status
+    ) {
+            this.id = UUID.randomUUID();
+            this.idempotencyKey = idempotencyKey;
+            this.sourceWallet = sourceWallet;
+            this.targetWallet = targetWallet;
+            this.amount = amount;
+            this.type = type;
+            this.status = status;
+            this.createdAt = OffsetDateTime.now(ZoneOffset.UTC);
     }
 
     public UUID getId() {
@@ -62,6 +74,10 @@ public class Transaction {
 
     public String getIdempotencyKey() {
         return idempotencyKey;
+    }
+
+    public Wallet getSourceWallet() {
+        return sourceWallet;
     }
 
     public Wallet getTargetWallet() {

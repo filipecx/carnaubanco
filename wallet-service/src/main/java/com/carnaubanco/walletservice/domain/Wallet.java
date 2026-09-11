@@ -8,6 +8,9 @@ import java.util.UUID;
 
 import javax.management.RuntimeErrorException;
 
+import com.carnaubanco.walletservice.exception.InsuficientBalanceException;
+import com.carnaubanco.walletservice.exception.WalletBlockedException;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -46,7 +49,7 @@ public class Wallet {
     public Wallet(UUID userId) {
         this.id = UUID.randomUUID();
         this.userId = userId;
-        this.currency = "PALHA";
+        this.currency = "PALHAS";
         this.balance = BigDecimal.ZERO.setScale(2);
         this.status = WalletStatus.ACTIVE;
         this.createdAt = OffsetDateTime.now(ZoneOffset.UTC);
@@ -58,7 +61,7 @@ public class Wallet {
             throw new IllegalArgumentException("O valor da transferência não pode ser igual ou menor que zero");
         }
         if (!isActive()) {
-            throw new IllegalArgumentException("Não é possível creditar em uma carteira inativa");
+            throw new WalletBlockedException("Não é possível creditar em uma carteira inativa");
         }
         this.balance = this.balance.add(amount);
         this.updatedAt = OffsetDateTime.now(ZoneOffset.UTC);
@@ -69,11 +72,11 @@ public class Wallet {
             throw new IllegalArgumentException("O valor da transferência não pode ser igual ou menor que zero");
         }
         if (!isActive()) {
-            throw new IllegalArgumentException("Não é possível debitar de uma carteira inativa");
+            throw new WalletBlockedException("Não é possível debitar de uma carteira inativa");
         }
 
         if (this.balance.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Saldo insuficiente");
+            throw new InsuficientBalanceException("Saldo insuficiente");
         }
         this.balance = this.balance.subtract(amount);
         this.updatedAt = OffsetDateTime.now(ZoneOffset.UTC);
