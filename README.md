@@ -1,6 +1,6 @@
 
 
-```markdown
+```
 # 🏦 Carteira Virtual de Economia Solidária Carnaubanco
 
 > **Projeto de Engenharia Financeira & Microsserviços Resilientes em Java 21 / Spring Boot 3**  
