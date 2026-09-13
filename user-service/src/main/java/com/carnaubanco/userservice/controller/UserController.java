@@ -1,9 +1,11 @@
 package com.carnaubanco.userservice.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,7 @@ import com.carnaubanco.userservice.service.UserService;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin (origins = "http://localhost:3000")
 @RestController 
 @RequestMapping ("/api/v1/users")
 public class UserController {
@@ -38,6 +41,12 @@ public class UserController {
         .toUri();
 
         return ResponseEntity.created(location).body(response);
+    }
+
+    @GetMapping 
+    public ResponseEntity<List<UserResponse>>  getAllUsers() {
+        List<UserResponse> responseList = userService.findAllActiveUsers();
+        return ResponseEntity.ok(responseList);
     }
 
     @GetMapping ("/{id}")
